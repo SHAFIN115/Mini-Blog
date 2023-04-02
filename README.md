@@ -5,4 +5,4 @@ This Laravel project uses Tailwind, CSS, and Bootstrap for front-end styling, an
 ![Alt text](/images/2.png)
 ![Alt text](/images/3.png)
 
-
+![Alt text](/images/6.png)
