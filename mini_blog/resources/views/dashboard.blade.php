@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@include('sweetalert::alert')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -119,11 +119,47 @@
                 <a href="{{ route('post_edit', $p->id) }}" class="btn btn-primary">EDIT</a>
             </td>
             <td>
-                <form action="{{ route('post_destroy', $p->id) }}" method="GET">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger"onclick="return confirm('Are you sure you want to delete this post?')">DELETE</button>
-                </form>
+            <form action="{{ route('post_destroy', $p->id) }}" method="GET" id="delete-form">
+    @csrf
+    @method('DELETE')
+    <button type="button" class="btn btn-danger" onclick="showDeleteConfirmation()">DELETE</button>
+</form>
+
+<script>
+function showDeleteConfirmation() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If user clicks "Yes" button, submit the form
+            document.getElementById('delete-form').submit();
+        } else {
+            // If user clicks "Cancel" button, display an error message
+            Swal.fire({
+                title: 'Post not deleted',
+                text: 'The post was not deleted.',
+                icon: 'error'
+            });
+        }
+    });
+}
+</script>
+
+
+
+
+
+
+
+
+
+
             </td>
         </tr>
         @endforeach
